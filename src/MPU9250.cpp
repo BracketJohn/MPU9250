@@ -31,13 +31,6 @@ MPU9250::MPU9250(TwoWire &bus,uint8_t address){
   _useSPI = false; // set to use I2C
 }
 
-/* MPU9250 object, input the SPI bus and chip select pin */
-MPU9250::MPU9250(SPIClass &bus,uint8_t csPin){
-  _spi = &bus; // SPI bus
-  _csPin = csPin; // chip select pin
-  _useSPI = true; // set to use SPI
-}
-
 /* starts communication with the MPU-9250 */
 int MPU9250::begin(){
   if( _useSPI ) { // using SPI for communication
