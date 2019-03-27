@@ -41,7 +41,7 @@ int MPU9250::begin(){
     // setting CS pin high
     digitalWrite(_csPin,HIGH);
     // begin SPI communication
-    _spi->begin();
+    
   } else { // using I2C for communication
     // starting the I2C bus
     _i2c->begin();
@@ -966,12 +966,12 @@ void MPU9250::setMagCalZ(float bias,float scaleFactor) {
 int MPU9250::writeRegister(uint8_t subAddress, uint8_t data){
   /* write data to device */
   if( _useSPI ){
-    _spi->beginTransaction(SPISettings(SPI_LS_CLOCK, MSBFIRST, SPI_MODE3)); // begin the transaction
+    
     digitalWrite(_csPin,LOW); // select the MPU9250 chip
-    _spi->transfer(subAddress); // write the register address
-    _spi->transfer(data); // write the data
+    
+    
     digitalWrite(_csPin,HIGH); // deselect the MPU9250 chip
-    _spi->endTransaction(); // end the transaction
+    
   }
   else{
     _i2c->beginTransmission(_address); // open the device
@@ -998,18 +998,18 @@ int MPU9250::readRegisters(uint8_t subAddress, uint8_t count, uint8_t* dest){
   if( _useSPI ){
     // begin the transaction
     if(_useSPIHS){
-      _spi->beginTransaction(SPISettings(SPI_HS_CLOCK, MSBFIRST, SPI_MODE3));
+      
     }
     else{
-      _spi->beginTransaction(SPISettings(SPI_LS_CLOCK, MSBFIRST, SPI_MODE3));
+      
     }
     digitalWrite(_csPin,LOW); // select the MPU9250 chip
-    _spi->transfer(subAddress | SPI_READ); // specify the starting register address
+    
     for(uint8_t i = 0; i < count; i++){
-      dest[i] = _spi->transfer(0x00); // read the data
+      dest[i] = 
     }
     digitalWrite(_csPin,HIGH); // deselect the MPU9250 chip
-    _spi->endTransaction(); // end the transaction
+    
     return 1;
   }
   else{
